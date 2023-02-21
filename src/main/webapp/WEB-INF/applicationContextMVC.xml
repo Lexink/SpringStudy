@@ -18,6 +18,7 @@
     <bean id="templateResolver" class="org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML" />
     </bean>
 
     <bean id="templateEngine" class="org.thymeleaf.spring6.SpringTemplateEngine">
@@ -26,8 +27,9 @@
     </bean>
 
     <bean class="org.thymeleaf.spring6.view.ThymeleafViewResolver">
-        <property name="templateEngine" ref="templateEngine"/>
-        <property name="order" value="1"/>
-        <property name="viewNames" value="*"/>
+        <property name="templateEngine" ref="templateEngine" />
+        <!-- NOTE 'order' and 'viewNames' are optional -->
+        <property name="order" value="1" />
+        <property name="viewNames" value="*" />
     </bean>
 </beans>
