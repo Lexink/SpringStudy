@@ -17,7 +17,7 @@ public class HelloController {
                            Model model){
 
         //System.out.println("Hello, " + name + " " + surname);
-        
+
         model.addAttribute("message", "Hello, " + name + " " + surname);
         return "first/hello";
     }
