@@ -8,6 +8,15 @@
   <form th:method="POST" th:action="@{/people}" th:object="${person}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">Name is not correct!</div>
+    <br/>
+    <label for="age">Enter Age: </label>
+    <input type="text" th:field="*{age}" id="age">
+    <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color:red">Age is not correct!</div>
+    <br/>
+    <label for="email">Enter e-mail: </label>
+    <input type="text" th:field="*{email}" id="email">
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red">E-mail is not valid!</div>
     <br/>
     <input type="submit" value="Create new person"/>
   </form>

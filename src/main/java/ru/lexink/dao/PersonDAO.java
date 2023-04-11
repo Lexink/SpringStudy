@@ -2,6 +2,7 @@ package ru.lexink.dao;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import java.util.concurrent.ThreadLocalRandom;
 import ru.lexink.entity.Person;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class PersonDAO {
             Person person = new Person();
             person.setId(i);
             person.setName("User_" + i);
+            person.setAge(random(20, 50));
+            person.setEmail(String.format("%d%d%d@xxxx.com", i, i, i));
             people.add(person);
         }
     }
@@ -46,9 +49,14 @@ public class PersonDAO {
         personToUpdate.setName(person.getName());
         personToUpdate.setEmail(person.getEmail());
         personToUpdate.setSurname(person.getSurname());
+        personToUpdate.setAge(person.getAge());
     }
 
     public void delete(int id){
         people.removeIf(p -> p.getId() == id);
+    }
+
+    private int random(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max);
     }
 }
