@@ -56,13 +56,25 @@ public class PersonDAO {
         return people;
     }
 
-   public Person show(int id){
-//
-//       return people.stream()
-//                .filter(person -> person.getId() == id)
-//                .findAny()
-//                .orElseThrow();
-       return null;
+   public Person show(int id) {
+       Person person = null;
+       String SQL = "SELECT * from person WHERE id=?";
+       try {
+           PreparedStatement statement = connection.prepareStatement(SQL);
+           statement.setInt(1, id);
+
+           ResultSet resultSet = statement.executeQuery();
+           resultSet.next();
+
+           person = new Person();
+           person.setId(resultSet.getInt("id"));
+           person.setName(resultSet.getString("name"));
+           person.setAge(resultSet.getInt("age"));
+           person.setEmail(resultSet.getString("email"));
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+       return person;
    }
 
     public void save(Person person){
@@ -82,19 +94,31 @@ public class PersonDAO {
     }
 
     public void update(int id, Person person){
-//        Person personToUpdate = show(id);
-//        personToUpdate.setName(person.getName());
-//        personToUpdate.setEmail(person.getEmail());
-//        personToUpdate.setSurname(person.getSurname());
-//        personToUpdate.setAge(person.getAge());
+        String SQL = "UPDATE person SET name=?, age=?, email=? WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setString(1, person.getName());
+            statement.setInt(2, person.getAge());
+            statement.setString(3, person.getEmail());
+            statement.setInt(4,id);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void delete(int id){
+        String SQL = "DELETE FROM person WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setInt(1, id);
 
-//        people.removeIf(p -> p.getId() == id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private int random(int min, int max) {
-        return ThreadLocalRandom.current().nextInt(min, max);
-    }
 }
